@@ -1,0 +1,18 @@
+{
+  "development": {
+    "username": "root",
+    "password": "wujian798",
+    "database": "vkit_building_admin_dev",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": "wujian798",
+    "database": "vkit_building_admin",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}

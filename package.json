@@ -1,0 +1,55 @@
+{
+  "name": "vkit-building-admin",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "egg": {
+    "declarations": true
+  },
+  "dependencies": {
+    "egg": "^2.26.0",
+    "egg-cors": "^2.2.3",
+    "egg-logger": "^2.4.1",
+    "egg-scripts": "^2.12.0",
+    "egg-sequelize": "^5.2.1",
+    "egg-validate": "^2.0.2",
+    "glob": "^7.1.6",
+    "mysql2": "^2.1.0",
+    "node-uuid": "^1.4.8"
+  },
+  "devDependencies": {
+    "autod": "^3.1.0",
+    "autod-egg": "^1.1.0",
+    "egg-bin": "^4.14.1",
+    "egg-ci": "^1.13.1",
+    "egg-mock": "^3.25.1",
+    "eslint": "^6.8.0",
+    "eslint-config-egg": "^8.0.1",
+    "sequelize-cli": "^5.5.1"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-vkit-building-admin",
+    "stop": "egg-scripts stop --title=egg-server-vkit-building-admin",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod",
+    "models": "sequelize-auto -h 127.0.0.1 -d design_building_dev -u root -x wujian798 -p 3306 -C"
+  },
+  "ci": {
+    "version": "10"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "wujian",
+  "license": "MIT"
+}
