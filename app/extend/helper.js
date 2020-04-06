@@ -1,5 +1,5 @@
 
-const code = require('../constants/code');
+const constantsCode = require('../constants/code');
 
 module.exports.initListParams = function(params) {
     const { query } = params;
@@ -19,8 +19,9 @@ module.exports.initListParams = function(params) {
 };
 
 module.exports.responseHandler = function(res, options = {}) {
-    const code = res ? (options.successCode || code.RET_CODE_SUCCESS) : (options.errorCode || code.RET_CODE_ERROR);
+    const code = res ? (options.successCode || constantsCode.RET_CODE_SUCCESS) : (options.errorCode || constantsCode.RET_CODE_ERROR);
     const message = res ? (options.success || 'success') : (options.error || 'error');
+    console.log('code', code);
     return {
         code,
         data: res,

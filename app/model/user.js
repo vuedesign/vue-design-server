@@ -12,14 +12,19 @@ module.exports = app => {
       field: 'id'
     },
     uuid: {
-      type: DataTypes.INTEGER(4),
-      allowNull: true,
+      type: DataTypes.STRING(36),
+      allowNull: false,
       field: 'uuid'
     },
     username: {
       type: DataTypes.STRING(45),
       allowNull: false,
       field: 'username'
+    },
+    nickname: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      field: 'nickname'
     },
     email: {
       type: DataTypes.STRING(255),

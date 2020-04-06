@@ -1,5 +1,6 @@
 // app/service/user.js
 const Service = require('egg').Service;
+const UUID = require('node-uuid');
 
 class UserService extends Service {
   async find(params) {
@@ -9,16 +10,16 @@ class UserService extends Service {
     return Object.assign(res, { pagination });
   }
 
-  async findOne(uuid) {
-    const res = await this.ctx.model.User.findOne({
-      where: {
-        uuid
-      }
-    });
+  async findOne(options = {}) {
+    const res = await this.ctx.model.User.findOne(options);
     return res
   }
 
   async create(data = {}) {
+    Object.assign(data, {
+      uuid: UUID.v4(),
+      isDelete: 0
+    });
     const res = await this.ctx.model.User.create(data);
     return res;
   }

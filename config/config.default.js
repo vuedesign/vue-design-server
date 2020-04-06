@@ -16,11 +16,16 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1581856638041_3871';
 
   // add your middleware config here
-  config.middleware = ['errorHandler'];
+  config.middleware = ['errorHandler', 'jwtAuth'];
 
   // 只对 /api 前缀的 url 路径生效
   config.errorHandler = {
       match: '/'
+  };
+
+  config.jwtAuth = {
+      secret: 'vue-design',
+      ignores: ['register', 'login', 'logout']
   };
 
   config.validate = {
