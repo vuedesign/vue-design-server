@@ -12,6 +12,10 @@ module.exports = app => {
   router.get('/api/userinfo', controller.auth.userinfo);
   router.get('/api/logout', controller.auth.logout);
 
+  // utils
+  router.post('/api/upload/file', controller.util.uploadFile);
+  // router.post('/api/upload/files', controller.util.uploadFiles);
+
   const webRouter = router.namespace('/api/web');
   const adminRouter = router.namespace('/api/admin');
   // user

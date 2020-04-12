@@ -70,6 +70,8 @@ class AuthController extends Controller {
         id: ctx.session.user.userId
       });
       ctx.body = ctx.helper.responseHandler(res);
+    } else {
+      ctx.body = ctx.helper.responseHandler(null);
     }
   }
 

@@ -1,6 +1,8 @@
 /* eslint valid-jsdoc: "off" */
 
 'use strict';
+const path = require('path');
+const os = require('os');
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -26,6 +28,17 @@ module.exports = appInfo => {
   config.jwtAuth = {
       secret: 'vue-design',
       ignores: ['register', 'login', 'logout']
+  };
+
+  // https://github.com/eggjs/egg-multipart
+  config.multipart = {
+    mode: 'file',
+    tmpdir: path.join(os.tmpdir(), 'egg-multipart-tmp', appInfo.name),
+    cleanSchedule: {
+      // run tmpdir clean job on every day 04:30 am
+      // cron style see https://github.com/eggjs/egg-schedule#cron-style-scheduling
+      cron: '0 30 4 * * *',
+    }
   };
 
   config.validate = {
