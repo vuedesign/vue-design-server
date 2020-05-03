@@ -1,17 +1,29 @@
 const Controller = require('egg').Controller;
-const UUID = require('node-uuid');
 
 class ProjectController extends Controller {
+  async check() {
+    const { ctx } = this;
+    const checkRule = {
+      field: { type: 'string', required: true },
+      value: { type: 'string', required: true },
+      uuid: { type: 'uuid', required: false },
+    };
+    ctx.validate(checkRule, ctx.request.body);
+    const res = await ctx.service.project.check(ctx.request.body);
+    ctx.body = {
+      code: 0,
+      data: res
+    };
+  }
+
   async create() {
     const { ctx } = this;
     const createRule = {
-      uuid: { type: 'uuid', required: true },
       name: { type: 'string', required: true },
       description: { type: 'string', required: false },
       thumb: { type: 'string', required: false },
       logo: { type: 'string', required: false },
       tagId: { type: 'string', required: false },
-      userId: { type: 'string', required: true },
       apiPrefixUrl: { type: 'string', required: false },
       package: { type: 'string', required: false },
       gitUrl: { type: 'string', required: false },
@@ -19,11 +31,8 @@ class ProjectController extends Controller {
       metaKeyword: { type: 'string', required: false },
       metaDescription: { type: 'string', required: false }
     };
-    const data = Object.assign(ctx.request.body, {
-      project_uuid: UUID.v1()
-    });
     ctx.validate(createRule);
-    const res = await ctx.service.project.create(data);
+    const res = await ctx.service.project.create(ctx.request.body);
     ctx.body = ctx.helper.responseHandler(res);
   }
   async list() {
@@ -49,11 +58,14 @@ class ProjectController extends Controller {
     ctx.body = ctx.helper.responseHandler(res);
   }
 
+  /**
+   * 删除项目
+   */
   async remove() {
     const { ctx } = this;
     const { params } = ctx;
     ctx.validate({ uuid: 'uuid' }, params);
-    const res = await this.service.project.remove(params.uuid);
+    const res = await ctx.service.project.remove(params.uuid);
     ctx.body = ctx.helper.responseHandler(res);
   }
 
@@ -61,21 +73,25 @@ class ProjectController extends Controller {
     const { ctx } = this;
     const { params } = ctx;
     const updateRule = {
-      project_name: { type: 'string', required: true },
-      project_description: { type: 'string', required: false },
-      project_thumb: { type: 'string', required: false },
-      project_logo: { type: 'string', required: false },
-      tag_id: { type: 'string', required: false },
-      api_prefix_url: { type: 'string', required: false },
-      package_json: { type: 'string', required: false },
-      git_url: { type: 'string', required: false },
-      meta_title: { type: 'string', required: false },
-      meta_keyword: { type: 'string', required: false },
-      meta_description: { type: 'string', required: false }
+      name: { type: 'string', required: true },
+      description: { type: 'string', required: false },
+      thumb: { type: 'string', required: false },
+      logo: { type: 'string', required: false },
+      tagId: { type: 'string', required: false },
+      apiPrefixUrl: { type: 'string', required: false },
+      package: { type: 'string', required: false },
+      gitUrl: { type: 'string', required: false },
+      metaTitle: { type: 'string', required: false },
+      metaKeyword: { type: 'string', required: false },
+      metaDescription: { type: 'string', required: false }
     };
     ctx.validate({ uuid: 'uuid' }, params);
     ctx.validate(updateRule);
-    const res = await this.service.project.update(ctx.request.body, params.uuid);
+    const res = await ctx.service.project.update(ctx.request.body, {
+      where: {
+        uuid: params.uuid
+      }
+    });
     ctx.body = ctx.helper.responseHandler(res);
   }
 }

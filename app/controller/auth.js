@@ -17,7 +17,10 @@ class AuthController extends Controller {
     const { name, password, remember} = ctx.request.body;
     const res = await ctx.service.user.findOne({
       where: {
-        [Op.or]: [{phone: name}, {username: name}],
+        [Op.or]: [
+          { phone: name },
+          { username: name }
+        ],
         password
       }
     });

@@ -2,6 +2,9 @@ const Controller = require('egg').Controller;
 const UUID = require('node-uuid');
 
 class ProjectController extends Controller {
+  /**
+   * 创建项目
+   */
   async create() {
     const { ctx } = this;
     const createRule = {
@@ -19,13 +22,18 @@ class ProjectController extends Controller {
       metaKeyword: { type: 'string', required: false },
       metaDescription: { type: 'string', required: false }
     };
-    const data = Object.assign(ctx.request.body, {
-      project_uuid: UUID.v1()
+    const data = Object.assign({}, ctx.request.body, {
+      uuid: UUID.v1(),
+      userId: ctx.session.user.userId
     });
-    ctx.validate(createRule);
+    ctx.validate(createRule, data);
     const res = await ctx.service.project.create(data);
     ctx.body = ctx.helper.responseHandler(res);
   }
+
+  /**
+   * 项目列表
+   */
   async list() {
     const { ctx } = this;
     const { query } = ctx;
@@ -40,8 +48,10 @@ class ProjectController extends Controller {
     ctx.body = ctx.helper.responseHandler(res);
   }
 
+  /**
+   * 项目详情
+   */
   async detail() {
-    // b9226fc0-5229-11ea-bb9a-8da47b2f8935
     const { ctx } = this;
     const { params } = ctx;
     ctx.validate({ uuid: 'uuid' }, params);
@@ -57,6 +67,9 @@ class ProjectController extends Controller {
     ctx.body = ctx.helper.responseHandler(res);
   }
 
+  /**
+   * 编辑项目
+   */
   async update() {
     const { ctx } = this;
     const { params } = ctx;

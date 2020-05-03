@@ -1,10 +1,27 @@
 // app/service/project.js
 const Service = require('egg').Service;
+const UUID = require('node-uuid');
 
 class ProjectService extends Service {
+  async check(options) {
+    const Op = this.ctx.app.Sequelize.Op;
+    const res = await this.ctx.model.Project.findOne({
+      where: {
+        [options.field]: options.value,
+        uuid: {
+          [Op.ne]: options.uuid || ''
+        }
+      }
+    });
+    return !!res;
+  }
+
   async find(params) {
     const { ctx } = this;
     const { options, pagination } = ctx.helper.initListParams(params);
+    Object.assign(options.where, {
+      isDelete: 0
+    });
     const res = await ctx.model.Project.findAndCountAll(options);
     return Object.assign(res, { pagination });
   }
@@ -19,13 +36,19 @@ class ProjectService extends Service {
   }
 
   async create(data = {}) {
-    const res = await this.ctx.model.Project.create(data);
+    const { ctx } = this;
+    Object.assign(data, {
+      uuid: UUID.v1(),
+      userId: ctx.session.user.userId,
+      isDelete: 0
+    });
+    const res = await ctx.model.Project.create(data);
     return res;
   }
 
   async remove(uuid) {
     const res = await this.ctx.model.Project.update({
-      is_delete: 1
+      isDelete: 1
     }, {
       where: {
         uuid
@@ -47,12 +70,13 @@ class ProjectService extends Service {
     return res
   }
 
-  async update(data = {}, uuid) {
-    const res = await this.ctx.model.Project.update(data, {
-      where: {
-        uuid
-      }
+  async update(data = {}, options = {}) {
+    const { ctx } = this;
+    Object.assign(data, {
+      userId: ctx.session.user.userId,
+      isDelete: 0
     });
+    const res = await ctx.model.Project.update(data, options);
     return res
   }
 }

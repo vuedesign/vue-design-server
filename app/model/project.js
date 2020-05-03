@@ -82,19 +82,22 @@ module.exports = app => {
       field: 'is_delete'
     },
     createdAt: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       allowNull: true,
-      field: 'created_at'
+      field: 'created_at',
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       allowNull: true,
-      field: 'updated_at'
+      field: 'updated_at',
+      defaultValue: DataTypes.NOW
     },
     deletedAt: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       allowNull: true,
-      field: 'deleted_at'
+      field: 'deleted_at',
+      defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'project'

@@ -33,7 +33,7 @@ class UtilController extends Controller {
     ctx.body = {
       oldFileName: file.filename,
       mimeType: file.mimeType,
-      url: target
+      url: name
     };
   }
 }

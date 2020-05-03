@@ -38,6 +38,7 @@ module.exports = app => {
   webRouter.put(`/projects/:uuid`, controller.web.project.update);
   webRouter.get(`/projects/:uuid`, controller.web.project.detail);
   webRouter.get(`/projects`, controller.web.project.list);
+  webRouter.post(`/projects/check`, controller.web.project.check);
 
   // admin
   // user
