@@ -30,6 +30,7 @@ class ProjectService extends Service {
     Object.assign(options.where, {
       isDelete: 0
     });
+    // asc DESC
     const res = await ctx.model.Project.findAndCountAll(options);
     return Object.assign(res, { pagination });
   }
@@ -69,17 +70,16 @@ class ProjectService extends Service {
     return res;
   }
   async destroy(uuid) {
-    const api = await this.ctx.model.Project.findOne({
+    const project = await this.ctx.model.Project.findOne({
       where: {
         uuid
       }
-    })
-    if (!api) {
+    });
+    if (!project) {
       this.ctx.helper.error(`uuid = '${uuid}' not fount`);
-      // throw new Error(`api_uuid = '${api_uuid}' not fount`);
     }
-    const res = await api.destroy();
-    return res
+    const res = await project.destroy();
+    return res;
   }
 
   async update(data = {}, options = {}) {

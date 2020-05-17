@@ -6,7 +6,7 @@ module.exports.initListParams = function(params) {
     const page = query.page ? parseInt(query.page) : 1;
     const size = query.size ? parseInt(query.size) : 20;
     const offset = (page - 1) * size;
-    const order = [['created_at', 'DESC']];
+    const order = [['updatedAt', 'ASC']];
     const where = { is_delete: 0 };
     Object.assign(where, params.where);
     delete params.where;
