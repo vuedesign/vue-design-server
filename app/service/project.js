@@ -3,6 +3,10 @@ const Service = require('egg').Service;
 const UUID = require('node-uuid');
 
 class ProjectService extends Service {
+  /**
+   * 校验字段重复服务
+   * @param {*} options 
+   */
   async check(options) {
     const Op = this.ctx.app.Sequelize.Op;
     const res = await this.ctx.model.Project.findOne({
@@ -16,6 +20,10 @@ class ProjectService extends Service {
     return !!res;
   }
 
+  /**
+   * 查找项目列表服务
+   * @param {*} params 
+   */
   async find(params) {
     const { ctx } = this;
     const { options, pagination } = ctx.helper.initListParams(params);
@@ -26,6 +34,10 @@ class ProjectService extends Service {
     return Object.assign(res, { pagination });
   }
 
+  /**
+   * 查找项目详情服务
+   * @param {*} uuid 
+   */
   async findOne(uuid) {
     const res = await this.ctx.model.Project.findOne({
       where: {

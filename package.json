@@ -1,5 +1,5 @@
 {
-  "name": "vkit-building-server",
+  "name": "vue-design-server",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -37,8 +37,8 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-vkit-building-admin",
-    "stop": "egg-scripts stop --title=egg-server-vkit-building-admin",
+    "start": "egg-scripts start --daemon --title=vue-design-server",
+    "stop": "egg-scripts stop --title=vue-design-server",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
@@ -47,7 +47,7 @@
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
-    "models": "sequelize-auto -h 127.0.0.1 -d design_building_dev -u root -x wujian798 -p 3306 -C"
+    "models": "sequelize-auto -h 127.0.0.1 -d vue-design-server -u root -x wujian798 -p 3306 -C"
   },
   "ci": {
     "version": "10"
@@ -56,6 +56,6 @@
     "type": "git",
     "url": ""
   },
-  "author": "wujian",
+  "author": "n.see",
   "license": "MIT"
 }

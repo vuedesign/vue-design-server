@@ -31,9 +31,12 @@ class UtilController extends Controller {
       // ctx.cleanupRequestFiles();
     }
     ctx.body = {
-      oldFileName: file.filename,
-      mimeType: file.mimeType,
-      url: name
+      code: 0,
+      data: {
+        oldFileName: file.filename,
+        mimeType: file.mimeType,
+        fileName: name
+      }
     };
   }
 }

@@ -3,12 +3,10 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (options = {}) => {
     return async function jwtAuth(ctx, next) {
-        console.log('options', options, ctx.request.url);
         const isIgnore = options.ignores.some(item => ctx.request.url.indexOf(item) > -1);
         if (isIgnore) {
             await next();
         } else {
-            console.log('ctx.header', ctx.header);
             const token = ctx.header.authorization; // 获取header里的authorization
             if (token) {
                 const authToken = token.substring(7);
