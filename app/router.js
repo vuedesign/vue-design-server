@@ -40,6 +40,14 @@ module.exports = app => {
   webRouter.get(`/projects`, controller.web.project.list);
   webRouter.post(`/projects/check`, controller.web.project.check);
 
+   // module
+   webRouter.post(`/modules`, controller.web.module.create);
+   webRouter.delete(`/modules/:uuid`, controller.web.module.remove);
+   webRouter.put(`/modules/:uuid`, controller.web.module.update);
+   webRouter.get(`/modules/:uuid`, controller.web.module.detail);
+   webRouter.get(`/modules`, controller.web.module.list);
+   webRouter.post(`/modules/check`, controller.web.module.check);
+
   // admin
   // user
   adminRouter.post(`/users`, controller.admin.user.create);

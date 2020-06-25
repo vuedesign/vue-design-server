@@ -29,12 +29,28 @@ module.exports = app => {
     fileMap: {
       type: DataTypes.TEXT,
       allowNull: true,
-      field: 'file_map'
+      field: 'file_map',
+      set: function(value) {
+        const data = JSON.stringify(value);
+        this.setDataValue('fileMap', data);
+      },
+      get: function() {
+        const fileMap = this.getDataValue('fileMap');
+        if (!fileMap) {
+          return '';
+        }
+        return JSON.parse(fileMap);
+      }
     },
     isMenu: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       field: 'is_menu'
+    },
+    parentId: {
+      type: DataTypes.INTEGER(11),
+      allowNull: true,
+      field: 'parent_id'
     },
     isDelete: {
       type: DataTypes.INTEGER(11),
