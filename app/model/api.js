@@ -26,6 +26,11 @@ module.exports = app => {
       allowNull: false,
       field: 'project_id'
     },
+    userId: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      field: 'user_id'
+    },
     url: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -71,7 +76,6 @@ module.exports = app => {
   });
 
   Model.associate = function() {
-
   }
 
   return Model;

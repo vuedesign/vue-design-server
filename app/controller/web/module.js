@@ -23,7 +23,8 @@ class ModuleController extends Controller {
       description: { type: 'string', required: true },
       fileMap: { type: 'object', required: false },
       isMenu: { type: 'number', required: true },
-      parentId: { type: 'number', required: true }
+      parentId: { type: 'number', required: true },
+      files: { type: 'array', required: true }
     };
     ctx.validate(createRule);
     const res = await ctx.service.module.create(ctx.request.body);

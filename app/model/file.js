@@ -41,6 +41,16 @@ module.exports = app => {
       allowNull: true,
       field: 'is_delete'
     },
+    moduleId: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      field: 'module_id'
+    },
+    userId: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      field: 'user_id'
+    },
     createdAt: {
       type: DataTypes.TIME,
       allowNull: true,
@@ -61,7 +71,7 @@ module.exports = app => {
   });
 
   Model.associate = function() {
-
+    app.model.File.belongsTo(app.model.Module);
   }
 
   return Model;

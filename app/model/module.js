@@ -52,6 +52,11 @@ module.exports = app => {
       allowNull: true,
       field: 'parent_id'
     },
+    userId: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      field: 'user_id'
+    },
     isDelete: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
@@ -77,7 +82,9 @@ module.exports = app => {
   });
 
   Model.associate = function() {
-
+    app.model.Module.hasMany(app.model.File, {
+      foreignKey: 'moduleId'
+    });
   }
 
   return Model;

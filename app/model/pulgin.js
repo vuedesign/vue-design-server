@@ -3,7 +3,7 @@
 module.exports = app => {
   const DataTypes = app.Sequelize;
 
-  const Model = app.model.define('page', {
+  const Model = app.model.define('component', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -16,39 +16,39 @@ module.exports = app => {
       allowNull: false,
       field: 'uuid'
     },
+    htmlTag: {
+      type: DataTypes.STRING(45),
+      allowNull: false,
+      field: 'html_tag'
+    },
     name: {
       type: DataTypes.STRING(45),
       allowNull: false,
       field: 'name'
     },
-    htmlTag: {
+    decription: {
       type: DataTypes.STRING(45),
-      allowNull: false,
-      field: 'html_tag'
+      allowNull: true,
+      field: 'decription'
     },
     tagId: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       field: 'tag_id'
     },
-    projectId: {
+    userId: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
-      field: 'project_Id'
+      field: 'user_id'
     },
-    moduleId: {
+    range: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
-      field: 'module_id'
-    },
-    options: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      field: 'options'
+      field: 'range'
     },
     isDelete: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
+      allowNull: true,
       field: 'is_delete'
     },
     createdAt: {
@@ -60,9 +60,14 @@ module.exports = app => {
       type: DataTypes.TIME,
       allowNull: true,
       field: 'updated_at'
+    },
+    deletedAt: {
+      type: DataTypes.TIME,
+      allowNull: true,
+      field: 'deleted_at'
     }
   }, {
-    tableName: 'page'
+    tableName: 'component'
   });
 
   Model.associate = function() {

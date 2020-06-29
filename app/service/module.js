@@ -27,8 +27,16 @@ class ModuleService extends Service {
   async find(params) {
     const { ctx } = this;
     const { options, pagination } = ctx.helper.initListParams(params);
+    console.log('ctx.model', ctx.model);
     Object.assign(options.where, {
       isDelete: 0
+    });
+    Object.assign(options, {
+      include:[
+        {
+          model: ctx.model.File
+        }
+      ]
     });
     // asc DESC
     const res = await ctx.model.Module.findAndCountAll(options);
@@ -48,13 +56,30 @@ class ModuleService extends Service {
     return res
   }
 
-  async create(data = {}) {
+  async create(data = {}, options = {}) {
     const { ctx } = this;
     Object.assign(data, {
       uuid: UUID.v1(),
-      isDelete: 0
+      isDelete: 0,
+      files: data.files.map(item => {
+        Object.assign(item, {
+          uuid: UUID.v4(),
+          isDelete: 0
+        });
+        return item;
+      })
     });
-    const res = await ctx.model.Module.create(data);
+
+    console.log('data', data);
+    
+    Object.assign(options, {
+      include:[
+        {
+          model: ctx.model.File
+        }
+      ]
+    });
+    const res = await ctx.model.Module.create(data, options);
     return res;
   }
 
