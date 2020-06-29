@@ -24,6 +24,7 @@ class ModuleController extends Controller {
       fileMap: { type: 'object', required: false },
       isMenu: { type: 'number', required: true },
       parentId: { type: 'number', required: true },
+      projectId: { type: 'number', required: true },
       files: { type: 'array', required: true }
     };
     ctx.validate(createRule);
@@ -35,7 +36,8 @@ class ModuleController extends Controller {
     const { query } = ctx;
     const listRule = {
       size: { type: 'number', required: false },
-      page: { type: 'number', required: false }
+      page: { type: 'number', required: false },
+      projectId: { type: 'number', required: true }
     }
     ctx.validate(listRule, query);
     const res = await ctx.service.module.find({

@@ -25,12 +25,11 @@ class ModuleService extends Service {
    * @param {*} params 
    */
   async find(params) {
+    console.log('params', params);
     const { ctx } = this;
     const { options, pagination } = ctx.helper.initListParams(params);
-    console.log('ctx.model', ctx.model);
-    Object.assign(options.where, {
-      isDelete: 0
-    });
+    console.log('ctx.model', params.query);
+    console.log('options', options);
     Object.assign(options, {
       include:[
         {
@@ -58,13 +57,17 @@ class ModuleService extends Service {
 
   async create(data = {}, options = {}) {
     const { ctx } = this;
+    const { userId } = ctx.session.user;
     Object.assign(data, {
       uuid: UUID.v1(),
       isDelete: 0,
+      userId,
       files: data.files.map(item => {
         Object.assign(item, {
           uuid: UUID.v4(),
-          isDelete: 0
+          isDelete: 0,
+          userId,
+          projectId: data.projectId
         });
         return item;
       })

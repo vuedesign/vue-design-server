@@ -52,9 +52,14 @@ module.exports = app => {
       allowNull: true,
       field: 'parent_id'
     },
+    projectId: {
+      type: DataTypes.INTEGER(11),
+      allowNull: true,
+      field: 'project_id'
+    },
     userId: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
+      allowNull: true,
       field: 'user_id'
     },
     isDelete: {

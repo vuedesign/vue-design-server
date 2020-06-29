@@ -27,9 +27,6 @@ class ProjectService extends Service {
   async find(params) {
     const { ctx } = this;
     const { options, pagination } = ctx.helper.initListParams(params);
-    Object.assign(options.where, {
-      isDelete: 0
-    });
     // asc DESC
     const res = await ctx.model.Project.findAndCountAll(options);
     return Object.assign(res, { pagination });
