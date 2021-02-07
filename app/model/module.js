@@ -26,27 +26,6 @@ module.exports = app => {
       allowNull: false,
       field: 'description'
     },
-    fileMap: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      field: 'file_map',
-      set: function(value) {
-        const data = JSON.stringify(value);
-        this.setDataValue('fileMap', data);
-      },
-      get: function() {
-        const fileMap = this.getDataValue('fileMap');
-        if (!fileMap) {
-          return '';
-        }
-        return JSON.parse(fileMap);
-      }
-    },
-    isMenu: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      field: 'is_menu'
-    },
     parentId: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
@@ -88,6 +67,9 @@ module.exports = app => {
 
   Model.associate = function() {
     app.model.Module.hasMany(app.model.File, {
+      foreignKey: 'moduleId'
+    });
+    app.model.Module.hasMany(app.model.Component, {
       foreignKey: 'moduleId'
     });
   }

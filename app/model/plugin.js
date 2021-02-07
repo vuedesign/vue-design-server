@@ -3,7 +3,7 @@
 module.exports = app => {
   const DataTypes = app.Sequelize;
 
-  const Model = app.model.define('component', {
+  const Model = app.model.define('plugin', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -67,7 +67,7 @@ module.exports = app => {
       field: 'deleted_at'
     }
   }, {
-    tableName: 'component'
+    tableName: 'plugin'
   });
 
   Model.associate = function() {

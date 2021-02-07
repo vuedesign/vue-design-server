@@ -6,7 +6,7 @@ module.exports.initListParams = function(params) {
     const page = query.page ? parseInt(query.page) : 1;
     const size = query.size ? parseInt(query.size) : 20;
     const offset = (page - 1) * size;
-    const order = [['updatedAt', 'ASC']];
+    const order = [['id', 'DESC']];
     const where = { isDelete: 0 };
     delete query.page;
     delete query.size;
@@ -14,6 +14,7 @@ module.exports.initListParams = function(params) {
         delete query.timestamp;
     }
     Object.assign(where, query);
+    delete params.query;
     const defaultParams = { limit: size, offset, order, where };
     return {
         options: Object.assign(defaultParams, params),

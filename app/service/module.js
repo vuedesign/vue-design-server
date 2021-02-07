@@ -2,6 +2,17 @@
 const Service = require('egg').Service;
 const UUID = require('node-uuid');
 
+const includeModels = (ctx) => {
+  return [
+    {
+      model: ctx.model.File
+    },
+    {
+      model: ctx.model.Component
+    }
+  ];
+} 
+
 class ModuleService extends Service {
   /**
    * 校验字段重复服务
@@ -25,19 +36,11 @@ class ModuleService extends Service {
    * @param {*} params 
    */
   async find(params) {
-    console.log('params', params);
     const { ctx } = this;
     const { options, pagination } = ctx.helper.initListParams(params);
-    console.log('ctx.model', params.query);
-    console.log('options', options);
     Object.assign(options, {
-      include:[
-        {
-          model: ctx.model.File
-        }
-      ]
+      include: includeModels(ctx)
     });
-    // asc DESC
     const res = await ctx.model.Module.findAndCountAll(options);
     return Object.assign(res, { pagination });
   }
@@ -58,16 +61,25 @@ class ModuleService extends Service {
   async create(data = {}, options = {}) {
     const { ctx } = this;
     const { userId } = ctx.session.user;
+    const { projectId } = data;
     Object.assign(data, {
       uuid: UUID.v1(),
-      isDelete: 0,
       userId,
       files: data.files.map(item => {
         Object.assign(item, {
           uuid: UUID.v4(),
-          isDelete: 0,
           userId,
-          projectId: data.projectId
+          projectId,
+          isDelete: 0
+        });
+        return item;
+      }),
+      components: data.components.map(item => {
+        Object.assign(item, {
+          uuid: UUID.v4(),
+          userId,
+          projectId,
+          isDelete: 0
         });
         return item;
       })
@@ -76,11 +88,7 @@ class ModuleService extends Service {
     console.log('data', data);
     
     Object.assign(options, {
-      include:[
-        {
-          model: ctx.model.File
-        }
-      ]
+      include: includeModels(ctx)
     });
     const res = await ctx.model.Module.create(data, options);
     return res;
@@ -114,6 +122,9 @@ class ModuleService extends Service {
     Object.assign(data, {
       userId: ctx.session.user.userId,
       isDelete: 0
+    });
+    Object.assign(options, {
+      include: includeModels(etx)
     });
     const res = await ctx.model.Module.update(data, options);
     return res

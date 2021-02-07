@@ -3,7 +3,7 @@
 module.exports = app => {
   const DataTypes = app.Sequelize;
 
-  const Model = app.model.define('page', {
+  const Model = app.model.define('component', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -21,14 +21,19 @@ module.exports = app => {
       allowNull: false,
       field: 'name'
     },
-    htmlTag: {
+    type: {
       type: DataTypes.STRING(45),
       allowNull: false,
+      field: 'type'
+    },
+    htmlTag: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
       field: 'html_tag'
     },
     tagId: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
+      allowNull: true,
       field: 'tag_id'
     },
     projectId: {
@@ -67,11 +72,11 @@ module.exports = app => {
       field: 'updated_at'
     }
   }, {
-    tableName: 'page'
+    tableName: 'component'
   });
 
   Model.associate = function() {
-
+    app.model.Component.belongsTo(app.model.Module);
   }
 
   return Model;
