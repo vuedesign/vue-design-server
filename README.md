@@ -1,3 +1,5 @@
 - nestjs
+- swagger
+- mysql
 - typeorm
 - jsonwebtoken
