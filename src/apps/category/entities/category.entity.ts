@@ -7,15 +7,15 @@ import {
   Generated
 } from 'typeorm';
 
-@Entity('project')
-export class ProjectEntity {
+@Entity('category')
+export class CategoryEntity {
   @PrimaryGeneratedColumn({
-      comment: '项目id'
+      comment: '类别id'
   })
   id: number;
 
   @Column({
-      comment: 'uuid'
+      comment: '类别uuid'
   })
   @Generated('uuid')
   uuid: string;
@@ -24,7 +24,7 @@ export class ProjectEntity {
       type: 'varchar',
       width: 255,
       nullable: false,
-      comment: '项目名称'
+      comment: '类别名称'
   })
   name: string;
 
@@ -32,7 +32,7 @@ export class ProjectEntity {
       type: 'varchar',
       width: 255,
       nullable: true,
-      comment: '项目描述'
+      comment: '类别描述'
   })
   description: string;
 
@@ -46,13 +46,23 @@ export class ProjectEntity {
   authorId: number;
 
   @Column({
-      name: 'is_show',
-      type: 'int',
-      width: 1,
-      nullable: true,
-      comment: '是否可用：1-可用，2-不可用'
+    type: 'int',
+    width: 11,
+    nullable: true,
+    comment: '作者id',
+    name: 'parent_id'
   })
-  isShow: number;
+  parentId: number;
+
+
+  @Column({
+    type: 'int',
+    width: 11,
+    nullable: true,
+    comment: '所属项目id',
+    name: 'project_id'
+  })
+  projectId: number;
 
   @CreateDateColumn({
       name: 'created_at',
@@ -70,4 +80,5 @@ export class ProjectEntity {
   })
   updatedAt: Date;
 };
+
 
