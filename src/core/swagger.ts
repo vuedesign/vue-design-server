@@ -7,6 +7,7 @@ export default (app: INestApplication) => {
         .setTitle(SWAGGER.title)
         .setTitle(SWAGGER.description)
         .setTitle(SWAGGER.version)
+        .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('swager', app, document);

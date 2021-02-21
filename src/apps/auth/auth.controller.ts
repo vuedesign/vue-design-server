@@ -1,5 +1,5 @@
 import { Controller, Request, Post, UnauthorizedException, Get, Body } from '@nestjs/common';
-import { ApiBody, ApiTags, ApiHeader } from '@nestjs/swagger';
+import { ApiBody, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { LoginBody } from './dto/auth.dto';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
@@ -7,6 +7,7 @@ import  { Public } from '../../core/decorators/auth.decorator';
 
 @Controller('auth')
 @ApiTags('用户模块')
+@ApiBearerAuth()
 export class AuthController {
   constructor(
     private authService: AuthService,
@@ -28,13 +29,6 @@ export class AuthController {
     return this.authService.login(data);
   }
 
-  @ApiHeader({
-    name: 'Authorization',
-    description: 'auth token',
-    schema: {
-      default: 'default token'
-    }
-  })
   @Get('profile')
   getProfile(@Request() req) {
     if (!req.user || !req.user.id) {

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Put, Param, Delete, Query } from '@nestjs/common';
 import { ProjectService } from './project.service';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags, ApiHeader, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { ProjectListQueryDto } from './dto/project.dto';
@@ -8,6 +8,7 @@ import  { Public } from '../../core/decorators/auth.decorator';
 
 @Controller('projects')
 @ApiTags('项目模块')
+@ApiBearerAuth()
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
@@ -21,7 +22,6 @@ export class ProjectController {
     return this.projectService.create(createProjectDto);
   }
 
-  @Public()
   @Get()
   findAll(@Query() query: ProjectListQueryDto) {
     console.log('query', query);
