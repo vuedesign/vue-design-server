@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Query, Patch } from '@nestjs/common';
 import { ProjectService } from './project.service';
-import { ApiBody, ApiTags, ApiHeader, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBody, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
+import { UpdateProjectDto, UpdateFieldDto } from './dto/update-project.dto';
 import { ProjectListQueryDto } from './dto/project.dto';
-import  { Public } from '../../core/decorators/auth.decorator';
 
 @Controller('projects')
 @ApiTags('项目模块')
@@ -12,10 +11,9 @@ import  { Public } from '../../core/decorators/auth.decorator';
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
-  @Public()
   @Post()
   @ApiBody({
-    description: '添加用户信息',
+    description: '添加项目',
     type: CreateProjectDto
   })
   create(@Body() createProjectDto: CreateProjectDto) {
@@ -43,8 +41,14 @@ export class ProjectController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
-    return this.projectService.update(+id, updateProjectDto);
+  update(@Param('id') id: string, @Body() updateProject: UpdateProjectDto) {
+    return this.projectService.update(+id, updateProject);
+  }
+
+  @Patch(':id')
+  updateField(@Param('id') id: string, @Body() updateField: UpdateFieldDto) {
+    console.log('updateField', id, updateField);
+    return this.projectService.updateField(+id, updateField);
   }
 
   @Delete(':id')

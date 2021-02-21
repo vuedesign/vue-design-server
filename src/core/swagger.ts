@@ -10,5 +10,5 @@ export default (app: INestApplication) => {
         .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup('swager', app, document);
+    SwaggerModule.setup('swagger', app, document);
 };

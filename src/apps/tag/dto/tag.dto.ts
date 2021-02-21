@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateProjectDto } from './create-project.dto';
+import { CreateTagDto } from './create-tag.dto';
 
-export class ProjectListQueryDto extends PartialType(CreateProjectDto) {
+export class TagListQueryDto extends PartialType(CreateTagDto) {
   @ApiProperty({
     description: '每页数量',
     default: 20,

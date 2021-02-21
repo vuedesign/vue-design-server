@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
+import { UpdateProjectDto, UpdateFieldDto } from './dto/update-project.dto';
 import { ProjectEntity } from './entities/project.entity';
 import { BaseService, IPaginationResponse, IPaginationQuery } from '@app/globals/services/base.service';
 
@@ -34,6 +34,13 @@ export class ProjectService extends BaseService {
 
   update(id: number, updateProjectDto: UpdateProjectDto) {
     return `This action updates a #${id} project`;
+  }
+
+  updateField(id: number, updateField: UpdateFieldDto) {
+    const value = updateField.type === 'number' ? Number(updateField.value) : updateField.value;
+    return this.projectRepository.update(id, {
+      [updateField.field]: value
+    });
   }
 
   remove(id: number) {

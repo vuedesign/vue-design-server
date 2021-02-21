@@ -7,18 +7,12 @@ import {
   Generated
 } from 'typeorm';
 
-@Entity('project')
-export class ProjectEntity {
+@Entity('tag')
+export class TagEntity {
   @PrimaryGeneratedColumn({
       comment: '项目id'
   })
   id: number;
-
-  @Column({
-      comment: 'uuid'
-  })
-  @Generated('uuid')
-  uuid: string;
 
   @Column({
       type: 'varchar',
@@ -37,6 +31,14 @@ export class ProjectEntity {
   description: string;
 
   @Column({
+    type: 'int',
+    width: 1,
+    nullable: true,
+    comment: '标签类型：1-项目，2-页面，3-服务，4-组件'
+  })
+  type: number;
+
+  @Column({
       type: 'int',
       width: 11,
       nullable: true,
@@ -44,15 +46,6 @@ export class ProjectEntity {
       name: 'author_id'
   })
   authorId: number;
-
-  @Column({
-    type: 'int',
-    width: 11,
-    nullable: true,
-    comment: '标签id',
-    name: 'tag_id'
-})
-tagId: number;
 
   @Column({
       name: 'is_show',
