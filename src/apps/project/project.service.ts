@@ -6,10 +6,6 @@ import { UpdateProjectDto, UpdateFieldDto } from './dto/update-project.dto';
 import { ProjectEntity } from './entities/project.entity';
 import { BaseService, IPaginationResponse, IPaginationQuery } from '@app/globals/services/base.service';
 
-interface PaginationQuery extends IPaginationQuery{
-  order: any
-}
-
 @Injectable()
 export class ProjectService extends BaseService {
   constructor(
@@ -23,8 +19,7 @@ export class ProjectService extends BaseService {
     return this.projectRepository.save(createProject);
   }
 
-  findAll(query?: PaginationQuery): Promise<IPaginationResponse> {
-    console.log('query=======', query);
+  findAll(query: IPaginationQuery): Promise<IPaginationResponse> {
     return this.findListAndPage(query);
   }
 

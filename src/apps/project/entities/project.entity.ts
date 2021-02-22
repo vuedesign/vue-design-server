@@ -46,13 +46,13 @@ export class ProjectEntity {
   authorId: number;
 
   @Column({
-    type: 'int',
-    width: 11,
+    type: 'varchar',
+    width: 255,
     nullable: true,
-    comment: '标签id',
-    name: 'tag_id'
-})
-tagId: number;
+    comment: '标签ids: 1,2,3',
+    name: 'tag_ids'
+  })
+  tagIds: string;
 
   @Column({
       name: 'is_show',

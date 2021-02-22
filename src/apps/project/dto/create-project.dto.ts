@@ -15,6 +15,11 @@ export class CreateProjectDto {
   description: string;
 
   @ApiProperty({
+    description: '标签'
+  })
+  tagIds: string;
+
+  @ApiProperty({
     default: 2,
     description: '作者id'
   })

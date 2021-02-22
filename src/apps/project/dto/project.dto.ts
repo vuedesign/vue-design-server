@@ -26,4 +26,12 @@ export class ProjectListQueryDto extends PartialType(CreateProjectDto) {
     type: 'string'
   })
   order?: string;
+
+  @ApiProperty({
+    description: '标签过滤',
+    default: 0,
+    required: false,
+    type: 'int'
+  })
+  tagId?: number;
 }

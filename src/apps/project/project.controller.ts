@@ -1,9 +1,14 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Query, Patch } from '@nestjs/common';
+import {
+  Controller, Get, Post, Body, Put, Param, Delete, Query, Patch,
+  ParseIntPipe,
+  DefaultValuePipe
+} from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { ApiBody, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto, UpdateFieldDto } from './dto/update-project.dto';
 import { ProjectListQueryDto } from './dto/project.dto';
+import { Like } from 'typeorm';
 
 @Controller('projects')
 @ApiTags('项目模块')
@@ -21,18 +26,32 @@ export class ProjectController {
   }
 
   @Get()
-  findAll(@Query() query: ProjectListQueryDto) {
-    console.log('query', query);
-    const { size, page } = query;
-    let order = {
-      updatedAt: 'DESC'
+  findAll(
+    @Query('size', ParseIntPipe) size: number,
+    @Query('page', ParseIntPipe) page: number,
+    @Query('tagId', new DefaultValuePipe(0), ParseIntPipe) tagId: number,
+    @Query('order') order: string,
+  ) {
+
+    const options = {
+      size,
+      page,
+      order: {
+        updatedAt: 'DESC'
+      },
+      where: {}
     };
-    if (query.order) {
-      const [orderKey, orderValue]: Array<string> = query.order.split(' ');
-      order[orderKey] = orderValue;
+
+    if (order) {
+      const [orderKey, orderValue]: Array<string> = order.split(' ');
+      options.order[orderKey] = orderValue;
     }
 
-    return this.projectService.findAll({ size, page, order});
+    if (tagId) {
+      options.where['tagIds'] = Like(`%${tagId}%`);
+    }
+
+    return this.projectService.findAll(options);
   }
 
   @Get(':id')
