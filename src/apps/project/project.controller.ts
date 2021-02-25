@@ -1,5 +1,6 @@
 import {
   Controller, Get, Post, Body, Put, Param, Delete, Query, Patch,
+  Request,
   ParseIntPipe,
   DefaultValuePipe
 } from '@nestjs/common';
@@ -7,7 +8,6 @@ import { ProjectService } from './project.service';
 import { ApiBody, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto, UpdateFieldDto } from './dto/update-project.dto';
-import { ProjectListQueryDto } from './dto/project.dto';
 import { Like } from 'typeorm';
 
 @Controller('projects')
@@ -21,8 +21,12 @@ export class ProjectController {
     description: '添加项目',
     type: CreateProjectDto
   })
-  create(@Body() createProjectDto: CreateProjectDto) {
-    return this.projectService.create(createProjectDto);
+  create(@Body() createProject: CreateProjectDto, @Request() req): Promise<any> {
+    Object.assign(createProject, {
+      authorId: req.user.id,
+      isShow: 1
+    });
+    return this.projectService.create(createProject);
   }
 
   @Get()
