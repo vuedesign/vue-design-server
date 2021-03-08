@@ -31,8 +31,8 @@ export class ProjectController {
 
   @Get()
   findAll(
-    @Query('size', ParseIntPipe) size: number,
-    @Query('page', ParseIntPipe) page: number,
+    @Query('size', new DefaultValuePipe(20), ParseIntPipe) size: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('tagId', new DefaultValuePipe(0), ParseIntPipe) tagId: number,
     @Query('order') order: string,
   ) {
@@ -55,27 +55,27 @@ export class ProjectController {
       options.where['tagIds'] = Like(`%${tagId}%`);
     }
 
-    return this.projectService.findAll(options);
+    return this.projectService.findListAndPage(options);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.projectService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.projectService.findOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateProject: UpdateProjectDto) {
-    return this.projectService.update(+id, updateProject);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateProject: UpdateProjectDto) {
+    return this.projectService.update(id, updateProject);
   }
 
   @Patch(':id')
-  updateField(@Param('id') id: string, @Body() updateField: UpdateFieldDto) {
+  updateField(@Param('id', ParseIntPipe) id: number, @Body() updateField: UpdateFieldDto) {
     console.log('updateField', id, updateField);
-    return this.projectService.updateField(+id, updateField);
+    return this.projectService.updateField(id, updateField);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.projectService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.projectService.remove(id);
   }
 }

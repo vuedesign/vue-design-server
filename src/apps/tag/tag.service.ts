@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
-import { TagEntity } from './entities/tag.entity';
+import { TagEntity } from '../../entities/tag.entity';
 import { BaseService, IPaginationResponse, IPaginationQuery } from '@app/globals/services/base.service';
 
 interface PaginationQuery extends IPaginationQuery{

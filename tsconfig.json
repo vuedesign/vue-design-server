@@ -17,6 +17,7 @@
         "@app/core/*": ["src/core/*"],
         "@app/globals/*": ["src/globals/*"],
         "@app/utils/*": ["src/utils/*"],
+        "@app/entities/*": ["src/entities/*"],
     }
   }
 }

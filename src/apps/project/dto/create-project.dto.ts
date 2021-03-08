@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty } from 'class-validator';
 
 export class CreateProjectDto {
   id?: number;
@@ -7,13 +8,25 @@ export class CreateProjectDto {
   @ApiProperty({
     description: '项目名称'
   })
+  @IsNotEmpty({
+    message: '项目名称不能为空！'
+  })
+  @IsString()
   name: string;
 
+  @IsString()
   @ApiProperty({
     description: '项目描述'
   })
   description?: string;
 
+  @IsString()
+  @ApiProperty({
+    description: '封面'
+  })
+  thumb?: string;
+
+  @IsString()
   @ApiProperty({
     description: '标签'
   })

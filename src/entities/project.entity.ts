@@ -63,6 +63,15 @@ export class ProjectEntity {
   })
   isShow: number;
 
+  @Column({
+    name: 'thumb',
+    type: 'varchar',
+    width: 255,
+    nullable: true,
+    comment: '封面'
+  })
+  thumb: string;
+
   @CreateDateColumn({
       name: 'created_at',
       type: 'timestamp',

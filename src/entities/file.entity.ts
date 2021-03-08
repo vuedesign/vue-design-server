@@ -2,39 +2,78 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
+  Generated,
   UpdateDateColumn,
-  CreateDateColumn,
-  Generated
+  CreateDateColumn
 } from 'typeorm';
 
-@Entity('tag')
-export class TagEntity {
+@Entity('file')
+export class FileEntity {
   @PrimaryGeneratedColumn({
-      comment: '项目id'
+      comment: '文件id'
   })
   id: number;
+
+
+  @Column({
+    comment: 'uuid'
+  })
+  @Generated('uuid')
+  uuid: string;
 
   @Column({
       type: 'varchar',
       width: 255,
       nullable: false,
-      comment: '项目名称'
+      comment: '原文件名称'
   })
-  name: string;
+  originalname: string;
+
+  @Column({
+    type: 'varchar',
+    width: 255,
+    nullable: true,
+    comment: '文件名称'
+  })
+  filename: string;
 
   @Column({
       type: 'varchar',
       width: 255,
       nullable: true,
-      comment: '项目描述'
+      comment: '文件描述'
   })
   description: string;
+
+  @Column({
+    type: 'varchar',
+    width: 255,
+    nullable: true,
+    comment: '文件路径'
+  })
+  path: string;
+
+  @Column({
+    type: 'varchar',
+    width: 255,
+    nullable: true,
+    comment: '文件路径'
+  })
+  size: string;
+
+  @Column({
+    type: 'varchar',
+    width: 255,
+    nullable: true,
+    comment: '文件类型'
+  })
+  mimetype: string;
 
   @Column({
     type: 'int',
     width: 1,
     nullable: true,
-    comment: '标签类型：1-项目，2-页面，3-服务，4-组件'
+    comment: '文件类型：1-图片（png、jpeg），2-动图（gif），3-视频（mp4），4-音频(mp3)，5-文件（zip、rar）'
   })
   type: number;
 
@@ -72,4 +111,5 @@ export class TagEntity {
   })
   updatedAt: Date;
 };
+
 
